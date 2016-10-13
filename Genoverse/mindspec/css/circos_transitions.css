@@ -1,0 +1,8 @@
+path {
+    -webkit-transition: .6s all;
+    transition: .6s fill;
+    fill: #D3D3D3;
+}
+path:hover {
+	fill: #22aa22;
+}
