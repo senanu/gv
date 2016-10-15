@@ -21,7 +21,7 @@ wait
 sed -i '' s/\|1978-09-07// $DATA/HG_Sequence_Var_Common_Data.txt
 sed -i '' s/\|1978-09-07// $DATA/HG_Sequence_Var_Rare_Data.txt
 sed -i '' s/\|1978-09-07// $DATA/CNV_Individual_Data.txt
-exit
+
 # update the data file with the results of the conversion
 ./add_new_build_data.pl -i $DATA/HG_Sequence_Var_Common_Data.txt -m $DATA/HG_common.json -f common -o $DATA/HG_common.txt -h
 ./add_new_build_data.pl -i $DATA/HG_Sequence_Var_Rare_Data.txt -m $DATA/HG_rare.json -f rare -o $DATA/HG_rare.txt -h
