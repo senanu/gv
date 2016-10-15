@@ -4,16 +4,15 @@ DATA="../data" ## Data directory
 # This step can be long, so only do it if the output file doesn't exist
 if [ ! -e $DATA/HG_common.json ]
 then
-    echo "Doesn't exist";
-    #(./convert_to_grch38.pl -i $DATA/HG_Sequence_Var_Common_Data.txt -o $DATA/HG_common.json -f common -e $DATA/HG_common.errors -t GRCh38)&
+    (./convert_to_grch38.pl -i $DATA/HG_Sequence_Var_Common_Data.txt -o $DATA/HG_common.json -f common -e $DATA/HG_common.errors -t GRCh38)&
 fi
 if [ ! -e $DATA/HG_rare.json ]
 then 
-    #(./convert_to_grch38.pl -i $DATA/HG_Sequence_Var_Rare_Data.txt -o $DATA/HG_rare.json -f rare -e $DATA/HG_rare.errors -t GRCh38)&
+    (./convert_to_grch38.pl -i $DATA/HG_Sequence_Var_Rare_Data.txt -o $DATA/HG_rare.json -f rare -e $DATA/HG_rare.errors -t GRCh38)&
 fi
 if [ ! -e $DATA/CNV_Individual.json ]
 then
-    #(./convert_to_grch38.pl -i $DATA/CNV_Individual_Data.txt -o $DATA/CNV_Individual.json -f cnv -e $DATA/CNV_Individual.errors -t GRCh38)&
+    (./convert_to_grch38.pl -i $DATA/CNV_Individual_Data.txt -o $DATA/CNV_Individual.json -f cnv -e $DATA/CNV_Individual.errors -t GRCh38)&
 fi
 wait
 
@@ -22,7 +21,7 @@ wait
 sed -i '' s/\|1978-09-07// $DATA/HG_Sequence_Var_Common_Data.txt
 sed -i '' s/\|1978-09-07// $DATA/HG_Sequence_Var_Rare_Data.txt
 sed -i '' s/\|1978-09-07// $DATA/CNV_Individual_Data.txt
-
+exit
 # update the data file with the results of the conversion
 ./add_new_build_data.pl -i $DATA/HG_Sequence_Var_Common_Data.txt -m $DATA/HG_common.json -f common -o $DATA/HG_common.txt -h
 ./add_new_build_data.pl -i $DATA/HG_Sequence_Var_Rare_Data.txt -m $DATA/HG_rare.json -f rare -o $DATA/HG_rare.txt -h
