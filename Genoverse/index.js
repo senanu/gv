@@ -332,7 +332,7 @@ genoverseConfig = {
         Genoverse.Track.extend({
             name            : 'AutDB: SNPs and small indels',
             id              : 'Small Variants',
-            url             : 'data/SNP_' + get_URL_coordParts('r', 'chr') + '.json',
+            url             : '../Genoverse_Data/SNP_' + get_URL_coordParts('r', 'chr') + '.json',
             resizable       : 'auto',
             model           : Genoverse.Track.Model.extend(),
             view            : Genoverse.Track.View.Gene,
@@ -402,8 +402,8 @@ genoverseConfig = {
         Genoverse.Track.extend({
             name            : 'AutDB: CNVs',
             id              : 'CNV',
-            //url             : 'data/CNV_' + get_URL_coordParts('r', 'chr') + '.json',
-            url : 'data/CNV_1.json',
+            url             : '../Genoverse_Data/CNV_' + get_URL_coordParts('r', 'chr') + '.json', 
+            //url : 'data/CNV_1.json',
             resizable       : 'auto',
             labels          : true,
             legend          : true,
