@@ -1,0 +1,19 @@
+** Installation **
+
+- Navigate to installation location
+- Download MindSpec's genoverse-specific files:
+    git clone https://github.com/senanu/gv.git
+- Download Genoverse:
+    git clone https://github.com/wtsi-web/Genoverse.git
+- Copy the following Genoverse directories
+    cp -r Genoverse/css gv/Genoverse/
+    cp -r Genoverse/fonts gv/Genoverse/
+    cp -r Genoverse/i gv/Genoverse/
+    cp -r Genoverse/js gv/Genoverse/
+    cp -r Genoverse/utils gv/Genoverse/
+
+- Copy the AutDB data tables:
+    mkdir data
+    cp original_loc/HG_Sequence_Var_Common_Data.txt data/
+    cp original_loc/HG_Sequence_Var_Rare_Data.txt data/
+    cp original_loc/CNV_Individual_Data.txt data/

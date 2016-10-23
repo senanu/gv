@@ -6,16 +6,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!-- DataTables CSS -->
         <!-- <link rel="stylesheet" type="text/css" href="examples/genoverse.org/styles.css"> -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.3.0/css/scroller.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="mindspec/css/dataTables_childTables.css">
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.3.0/css/scroller.dataTables.min.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="mindspec/css/dataTables_childTables.css"> -->
         <!-- DataTables -->
         <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/scroller/1.3.0/js/dataTables.scroller.min.js"></script>
+        <!-- <script src="https://cdn.datatables.net/scroller/1.3.0/js/dataTables.scroller.min.js"></script> -->
         <!-- Genoverse -->
         <script type="text/javascript" src="js/genoverse.combined.nojquery.js"></script>
 
-            
+
     </head>
     <body>
         <script>
@@ -23,28 +23,27 @@
          var cnv_url = "CNV_chr_1.json";
          var chr_num = "1";
         </script>
-        <!-- My functions -->
         <script src="index.js"></script>
         <div class="container" id="searcher">
             <div class="head" id="searcher_head"><h1>Search for data</h1></div>
-            <p> Select genes from <a href="./circos_genes.html"> circos plot </a></p>
-	    <p> OR </p>
-            <form id="search_form" action="" > 
+            <!-- <p> Select genes from <a href="./circos_genes.html"> circos plot </a></p> -->
+	    <!-- <p> OR </p> -->
+            <form id="search_form" action="" >
                 <input type="text" name="coords" id="coords">
                 <input type="submit" name="searcher_submit" id="searcher_submit">
-            </form> 
+            </form>
             <div id="message" name="message">
                 Enter coordinates in the form "4:123-345" or search for a gene name (eg DIAPH3).
                 <div id="actual_coords" name="actual_coords">
-                    Current display:  
+                    Current display:
                 </div>
                 <div id="query_coords" name="query_coords">
-                    Last query: 
-                </div>   
+                    Last query:
+                </div>
             </div>
         </div>
-          
-        
+
+
 <!--    <div class="container" id="displays_container">
             <div class="head"><h1>Tabular display</h1></div>
             <div class="wrap" id="table_div">
@@ -70,16 +69,16 @@
                 </table>
             </div>
         </div> -->
-        
+
         <div class="container" id="genoverse_container" >
             <div class="head"><h1>Genoverse</h1></div>
             <div class="wrap" id="genoverse_div">
-                
+
                 <div id='genoverse'></div>
-                
+
                 <script>
                  window.genoverse = new Genoverse(genoverseConfig);
-                 
+
                 </script>
             </div>
         </div>
