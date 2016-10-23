@@ -17,3 +17,8 @@
     cp original_loc/HG_Sequence_Var_Common_Data.txt data/
     cp original_loc/HG_Sequence_Var_Rare_Data.txt data/
     cp original_loc/CNV_Individual_Data.txt data/
+- Generate the flat files that Genoverse will need. This will take a few hours
+  and will generate a number of errors, mostly due to variants in the original
+  tables that have unlisted genome builds.
+    cd gv/scripts
+    ./workflow.sh
