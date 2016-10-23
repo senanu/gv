@@ -305,20 +305,6 @@ genoverseConfig = {
             100000     : false,
             resizable  : 'auto'
         }),
-      //  Genoverse.Track.extend({
-      //      name            : 'Variant from Table',
-      //      url             : 'CNV_GRCH38.gff3',
-      //      resizable       : 'auto',
-      //      model           : Genoverse.Track.Model.Transcript.GFF3,
-      //      view            : Genoverse.Track.View.Transcript
-      //  }),
-      Genoverse.Track.extend({
-            name            : 'Variant from Table',
-            url             : 'regions.gff3',
-            resizable       : 'auto',
-            model           : Genoverse.Track.Model.Transcript.GFF3,
-            view            : Genoverse.Track.View.Transcript
-        }),
         Genoverse.Track.Gene,
         Genoverse.Track.extend({
             name            : 'Ensembl Regulatory Features',
@@ -384,13 +370,7 @@ genoverseConfig = {
                 this.base.apply(this, arguments);
 
                 if (this.legend === true) {
-                    this.type = 'b';//this.id;
-
-                    this.browser.addTrack(Genoverse.Track.Legend.extend({
-                        id          : this.id   + 'Legend',
-                        name        : this.name + ' Legend',
-                        featureType : this.type
-                    }), this.order + 0.1);
+                    this.addLegend();
                 }
             },
             insertFeature: function (feature) {
@@ -402,7 +382,7 @@ genoverseConfig = {
         Genoverse.Track.extend({
             name            : 'AutDB: CNVs',
             id              : 'CNV',
-            url             : '../Genoverse_Data/CNV_' + get_URL_coordParts('r', 'chr') + '.json', 
+            url             : '../Genoverse_Data/CNV_' + get_URL_coordParts('r', 'chr') + '.json',
             //url : 'data/CNV_1.json',
             resizable       : 'auto',
             labels          : true,
@@ -453,12 +433,7 @@ genoverseConfig = {
             constructor: function () {
                 this.base.apply(this, arguments);
                 if (this.legend === true) {
-                    this.type = this.id;
-                    this.browser.addTrack(Genoverse.Track.Legend.extend({
-                        id          : this.id   + 'Legend',
-                        name        : this.name + ' Legend',
-                        featureType : this.type
-                    }), this.order + 0.2);
+                    this.addLegend();
                 }
             },
             insertFeature: function (feature) {
