@@ -1,0 +1,10 @@
+#Ignore Genoverse files
+# For updating, these can be copied in
+Genoverse/css/
+Genoverse/fonts/
+Genoverse/i/
+Genoverse/js/
+Genoverse/utils/
+
+# Ignore all data files
+Genoverse_Data/
