@@ -1,16 +1,27 @@
 #!/bin/bash
 
+# Where are files stored?
+
+# Three files directly from AutDB
+# All should be pipe-delimited text files
 COMMONVARS="/Users/senanu/Desktop/mindspec/data/processed/HG_common_Q2_2017.csv"
 RAREVARS="/Users/senanu/Desktop/mindspec/data/processed/HG_rare_Q2_2017.csv"
 CNVVARS="/Users/senanu/Desktop/mindspec/data/processed/CNV_Individual_Q2_2017.csv"
+
+# Directory name in which to to temporarily hold data
+# This directory will be deleted at the end of the script, so make sure
+# it doesn't point to anything important, because it will be deleted!
 DATADIR="../data"
 HGFILE="temp_HG.json"
 CNVFILE="temp_CNV.json"
+
+# Final data repository
 GENOVERSEDATADIR="../Genoverse_Data"
-#GENOVERSEDATADIR="tempdir"
+
 
 mkdir $DATADIR
 
+# Convert the pipe-delimited text files to json files
 ./txt2json.pl  -i $COMMONVARS -i $RAREVARS -o $DATADIR/$HGFILE -d "|"
 ./txt2json.pl -i $CNVVARS -o $DATADIR/$CNVFILE -d "|"
 
@@ -36,7 +47,6 @@ sed -i '' 's/CNV type/CNV_type/' $DATADIR/$CNVFILE
 mkdir $GENOVERSEDATADIR
 ./divide_by_chr.pl -i $DATADIR/$HGFILE -o $GENOVERSEDATADIR/SNP_
 ./divide_by_chr.pl -i $DATADIR/$CNVFILE -o $GENOVERSEDATADIR/CNV_
-#mv ../Genoverse_Data/* ../../Genoverse/data/
 
 # Clean up
 rm -fr $DATADIR

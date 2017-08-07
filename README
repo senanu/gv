@@ -15,4 +15,7 @@
 - Then run workflow.sh
     cd gv/scripts
     ./workflow.sh
-- Make the root directory ./Genoverse
+- Make the root web directory ./gv/Genoverse
+- Delete the original git Genoverse copy
+    cd ../../
+    rm -fr Genoverse 
