@@ -38,6 +38,11 @@ perl -ni -e 'print if /\{|\}|\[|\]|CNV inheritance|CNV type|CNV-disease segregat
 sed -i '' 's/Mutation\ Type\ Details/Mutation_Type_Details/' $DATADIR/$HGFILE
 sed -i '' 's/Mutation\ Type\ Details/Mutation_Type_Details/' $DATADIR/$CNVFILE
 
+# Convert Unique ID to 'ID' so that Genoverse can use it as a label for the
+# variant. This is only relevant to HG module files, since CNV module doesn't
+# have a convenient ID field
+sed -i '' 's/Unique\ ID/ID/' $DATADIR/$HGFILE
+
 # delete the "_GRCh38" off the end of the chr, start, and end strings
 sed -i '' 's/_GRCh38//' $DATADIR/$HGFILE
 sed -i '' 's/_GRCh38//' $DATADIR/$CNVFILE
