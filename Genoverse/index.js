@@ -284,165 +284,128 @@ $.fn.dataTable.ext.search.push(
     }
 );
 
-genoverseConfig = {
-    container : '#genoverse', // Where to inject Genoverse (css/jQuery selector)
-    genome    : 'grch38', // see js/genomes/
-    chr       : chr_num,
-    start     : 100000,
-    end       : 100100,
-    highlights : [{start     : get_URL_coordParts('last_query', 'start'),
-                   end       : get_URL_coordParts('last_query', 'end'),
-                   label     : "Last Query Position",
-                   removable : 1}],
-    plugins   : [ 'controlPanel', 'karyotype', 'trackControls', 'resizer', 'focusRegion', 'fullscreen', 'tooltips', 'fileDrop' ],
-    tracks    : [
-        Genoverse.Track.Scalebar,
-        Genoverse.Track.extend({
-            name       : 'Sequence',
-            controller : Genoverse.Track.Controller.Sequence,
-            model      : Genoverse.Track.Model.Sequence.Ensembl,
-            view       : Genoverse.Track.View.Sequence,
-            100000     : false,
-            resizable  : 'auto'
-        }),
-        Genoverse.Track.Gene,
-        Genoverse.Track.extend({
-            name            : 'Ensembl Regulatory Features',
-            url             : 'http://rest.ensembl.org/overlap/region/human/__CHR__:__START__-__END__?feature=regulatory;content-type=application/json',
-            resizable       : 'auto',
-            model           : Genoverse.Track.Model.extend({ dataRequestLimit : 5000000 }),
-            setFeatureColor : function (f) {
-                f.color = '#AAA';
-            }
-        }),
-        Genoverse.Track.extend({
-            name            : 'AutDB: SNPs and small indels',
-            id              : 'Small Variants',
-            url             : '../Genoverse_Data/SNP_' + get_URL_coordParts('r', 'chr') + '.json',
-            resizable       : 'auto',
-            model           : Genoverse.Track.Model.extend(),
-            view            : Genoverse.Track.View.Gene,
-            featureHeight   : 10,
-            legend          : true,
 
-            colorMap         : {
-                '2KB_upstream_variant'                           : '#7ac5cd',
-                '2KB_upstream_variant, 5_prime_UTR_variant'      : '#7ac5cd',
-                '3_prime_UTR_variant'                            : '#7ac5cd',
-                '5KB_upstream_variant'                           : '#7ac5cd',
-                '5_prime_UTR_variant'                            : '#7ac5cd',
-                'copy_number_gain'                               : '#406000',
-                'copy_number_loss'                               : '#606080',
-                'frameshift_variant'                             : '#9400D3',
-                'frameshift_variant;frameshift_variant'          : '#9400D3',
-                'inframe_deletion'                               : '#606080',
-                'inframe_deletion;inframe_deletion'              : '#606080',
-                'inframe_insertion'                              : '#406000',
-                'initiator_codon_variant'                        : '#32cd32',
-                'intron_variant'                                 : '#02599c',
-                'inversion'                                      : '#458b00',
-                'missense_variant'                               : '#ff69b4',
-                'missense_variant;missense_variant'              : '#ff69b4',
-                'nonsynonymous_variant'                          : '#ff69b4',
-                'splice_site_variant'                            : '#FF581A',
-                'splice_site_variant, 3_prime_UTR_variant'       : '#FF581A',
-                'splice_site_variant;splice_site_variant'        : '#FF581A',
-                'stop_gained'                                    : '#ff0000',
-                'stop_gained;stop_gained'                        : '#ff0000',
-                'synonymous_variant'                             : '#76eeD0',
-                'translocation'                                  : '#458b00',
-                'trinucleotide_repeat_microsatellite_feature'    : '#7f7f7f',
-                'trinucleotide_repeat_microsatellite_feature, 5_prime_UTR_variant' : '#7f7f7f',
-                'Complex'                  : '#669900',
-                'Deletion'                 : '#606080',
-                'Duplication'              : '#406000',
-                'Duplication (mosaic)'     : '#406000',
-                'Homozygous deletion'      : '#606080',
-                'Homozygous duplication'   : '#406000',
-                'Mosaic deletion'          : '#606080',
-                'N/A'                      : '#000D1A',
-                'NA'                       : '#000D1A',
-                'Triplication'             : '#406000',
-                'Unknown'                  : '#000D1A',
-                'complex'                  : '#669900'
-            },
-            constructor: function () {
-                this.base.apply(this, arguments);
 
-                if (this.legend === true) {
-                    this.addLegend();
+
+$(function() {
+    new Genoverse({
+        genome    : 'grch38', // see js/genomes/
+        chr       : chr_num,
+        start     : 100000,
+        end       : 100100,
+        highlights : [{start     : get_URL_coordParts('last_query', 'start'),
+                       end       : get_URL_coordParts('last_query', 'end'),
+                       label     : "Last Query Position",
+                       removable : 1}],
+        plugins   : [ 'controlPanel', 'karyotype', 'trackControls', 'resizer', 'focusRegion', 'fullscreen', 'tooltips', 'fileDrop' ],
+        tracks    : [
+            Genoverse.Track.Scalebar,
+            Genoverse.Track.extend({
+                name       : 'Sequence',
+                controller : Genoverse.Track.Controller.Sequence,
+                model      : Genoverse.Track.Model.Sequence.Ensembl,
+                view       : Genoverse.Track.View.Sequence,
+                100000     : false,
+                resizable  : 'auto'
+            }),
+            Genoverse.Track.Gene,
+            Genoverse.Track.extend({
+                name            : 'Ensembl Regulatory Features',
+                url             : 'http://rest.ensembl.org/overlap/region/human/__CHR__:__START__-__END__?feature=regulatory;content-type=application/json',
+                resizable       : 'auto',
+                model           : Genoverse.Track.Model.extend({ dataRequestLimit : 5000000 }),
+                setFeatureColor : function (f) {
+                    f.color = '#AAA';
                 }
-            },
-            insertFeature: function (feature) {
-                feature.color  = this.prop('colorMap')[feature.variant_type];
-                feature.legend = feature.variant_type;
-                this.base(feature);
-            }
-        }),
-        Genoverse.Track.extend({
-            name            : 'AutDB: CNVs',
-            id              : 'CNV',
-            url             : '../Genoverse_Data/CNV_' + get_URL_coordParts('r', 'chr') + '.json',
-            //url : 'data/CNV_1.json',
-            resizable       : 'auto',
-            labels          : true,
-            legend          : true,
-            model           : Genoverse.Track.Model.extend(),
-            view            : Genoverse.Track.View.Gene,
-            colorMap        : {
-                '2KB_upstream_variant'                           : '#7ac5cd',
-                '2KB_upstream_variant, 5_prime_UTR_variant'      : '#7ac5cd',
-                '3_prime_UTR_variant'                            : '#7ac5cd',
-                '5KB_upstream_variant'                           : '#7ac5cd',
-                '5_prime_UTR_variant'                            : '#7ac5cd',
-                'copy_number_gain'                               : '#406000',
-                'copy_number_loss'                               : '#606080',
-                'frameshift_variant'                             : '#9400D3',
-                'frameshift_variant;frameshift_variant'          : '#9400D3',
-                'inframe_deletion'                               : '#ff69b4',
-                'inframe_deletion;inframe_deletion'              : '#ff69b4',
-                'inframe_insertion'                              : '#ff69b4',
-                'initiator_codon_variant'                        : '#32cd32',
-                'intron_variant'                                 : '#02599c',
-                'inversion'                                      : '#458b00',
-                'missense_variant'                               : '#ffd700',
-                'missense_variant;missense_variant'              : '#ffd700',
-                'nonsynonymous_variant'                          : '#FF0080',
-                'splice_site_variant'                            : '#FF581A',
-                'splice_site_variant, 3_prime_UTR_variant'       : '#FF581A',
-                'splice_site_variant;splice_site_variant'        : '#FF581A',
-                'stop_gained'                                    : '#ff0000',
-                'stop_gained;stop_gained'                        : '#ff0000',
-                'synonymous_variant'                             : '#76ee00',
-                'translocation'                                  : '#458b00',
-                'trinucleotide_repeat_microsatellite_feature'    : '#7f7f7f',
-                'trinucleotide_repeat_microsatellite_feature, 5_prime_UTR_variant' : '#7f7f7f',
-                'Complex'                  : '#669900',
-                'Deletion'                 : '#FF0000',
-                'Duplication'              : '#0033CC',
-                'Duplication (mosaic)'     : '#001F7D',
-                'Homozygous deletion'      : '#800000',
-                'Homozygous duplication'   : '#8080FF',
-                'Mosaic deletion'          : '#330000',
-                'N/A'                      : '#000D1A',
-                'NA'                       : '#000D1A',
-                'Triplication'             : '#003B00',
-                'Unknown'                  : '#000D1A',
-                'complex'                  : '#669900'
-            },
-            constructor: function () {
-                this.base.apply(this, arguments);
-                if (this.legend === true) {
-                    this.addLegend();
+            }),
+            Genoverse.Track.extend({
+                name            : 'AutDB: Human Gene Module',
+                id              : 'Human Gene Module',
+                url             : '../Genoverse_Data/SNP_' + get_URL_coordParts('r', 'chr') + '.json',
+                resizable       : 'auto',
+                model           : Genoverse.Track.Model.extend(),
+                view            : Genoverse.Track.View.Gene,
+                featureHeight   : 10,
+                legend          : true,
+                colorMap        : colors,
+                constructor: function () {
+                    this.base.apply(this, arguments);
+                    if (this.legend === true) {
+                        this.addLegend();
+                    }
+                },
+                insertFeature: function (feature) {
+                    feature.color  = this.prop('colorMap')[feature.Mutation_Type_Details];
+                    feature.legend = feature.Mutation_Type_Details;
+                    this.base(feature);
                 }
-            },
-            insertFeature: function (feature) {
-                feature.color  = this.prop('colorMap')[feature.variant_type];
-                feature.legend = feature.variant_type;
-                this.base(feature);
-            }
-        }),
+            }),
+            Genoverse.Track.extend({
+                name            : 'AutDB: CNVs',
+                id              : 'CNV',
+                url             : '../Genoverse_Data/CNV_' + get_URL_coordParts('r', 'chr') + '.json',
+                resizable       : 'auto',
+                labels          : true,
+                legend          : true,
+                model           : Genoverse.Track.Model.extend(),
+                view            : Genoverse.Track.View.Gene,
+                colorMap        : colors,
+                constructor: function () { // Add a legend
+                    this.base.apply(this, arguments);
+                    if (this.legend === true) {
+                        this.addLegend();
+                    }
+                },
+                insertFeature: function (feature) { // Add colors
+                    feature.color  = this.prop('colorMap')[feature.CNV_type];
+                    feature.legend = feature.CNV_type;
+                    this.base(feature);
+                }
+            }),
 
-        Genoverse.Track.dbSNP,
-    ]
+            Genoverse.Track.dbSNP,
+        ]
+    });
+});
+
+var colors = {
+    '2KB_upstream_variant'                           : '#7ac5cd',
+    '2KB_upstream_variant, 5_prime_UTR_variant'      : '#7ac5cd',
+    '3_prime_UTR_variant'                            : '#7ac5cd',
+    '5KB_upstream_variant'                           : '#7ac5cd',
+    '5_prime_UTR_variant'                            : '#7ac5cd',
+    'copy_number_gain'                               : '#406000',
+    'copy_number_loss'                               : '#606080',
+    'frameshift_variant'                             : '#9400D3',
+    'frameshift_variant;frameshift_variant'          : '#9400D3',
+    'inframe_deletion'                               : '#ff69b4',
+    'inframe_deletion;inframe_deletion'              : '#ff69b4',
+    'inframe_insertion'                              : '#ff69b4',
+    'initiator_codon_variant'                        : '#32cd32',
+    'intron_variant'                                 : '#02599c',
+    'inversion'                                      : '#458b00',
+    'missense_variant'                               : '#ffd700',
+    'missense_variant;missense_variant'              : '#ffd700',
+    'nonsynonymous_variant'                          : '#FF0080',
+    'splice_site_variant'                            : '#FF581A',
+    'splice_site_variant, 3_prime_UTR_variant'       : '#FF581A',
+    'splice_site_variant;splice_site_variant'        : '#FF581A',
+    'stop_gained'                                    : '#ff0000',
+    'stop_gained;stop_gained'                        : '#ff0000',
+    'synonymous_variant'                             : '#76ee00',
+    'translocation'                                  : '#458b00',
+    'trinucleotide_repeat_microsatellite_feature'    : '#7f7f7f',
+    'trinucleotide_repeat_microsatellite_feature, 5_prime_UTR_variant' : '#7f7f7f',
+    'Complex'                                        : '#669900',
+    'Deletion'                                       : '#FF0000',
+    'Duplication'                                    : '#0033CC',
+    'Duplication (mosaic)'                           : '#001F7D',
+    'Homozygous deletion'                            : '#800000',
+    'Homozygous duplication'                         : '#8080FF',
+    'Mosaic deletion'                                : '#330000',
+    'N/A'                                            : '#000D1A',
+    'NA'                                             : '#000D1A',
+    'Triplication'                                   : '#003B00',
+    'Unknown'                                        : '#000D1A',
+    'complex'                                        : '#669900'
 };

@@ -3,9 +3,9 @@ if (! empty($_POST{'coordStr'}))
 {
     $coordStr = $_POST['coordStr'];
  //   global $browse_chr;
- //   global $browse_start; 
+ //   global $browse_start;
  //   global $browse_end;
-   
+
     list ($browse_chr, $browse_start, $browse_end, $error) = parseCoords($coordStr);
     $searched_coords = $browse_chr . ":" . $browse_start . "-" . $browse_end;
     $dat = array(
@@ -19,9 +19,9 @@ if (! empty($_POST{'coordStr'}))
 
 <?php
 /* This section looks at 'id', 'chr', and 'infile' form data and basically
- * uses php version of grep to select all rows from a gff3 file with the 
+ * uses php version of grep to select all rows from a gff3 file with the
  * correct chromosome and correct ID and places them in an 'outfile' for 
- * genoverse to read. It is called by clicking the coordinate button in the 
+ * genoverse to read. It is called by clicking the coordinate button in the
  * dataTables table.
  */
 if (!empty($_POST{'id'}))
@@ -36,9 +36,9 @@ if (!empty($_POST{'id'}))
     }
     fclose($fh);
 }
-?> 
-                            
-    
+?>
+
+
 <?php
 function get_ensembl_id($gene_name)
 {
@@ -58,7 +58,7 @@ function get_ensembl_id($gene_name)
     return($json[0]['id']);
 }
 ?>
-    
+
 <?php
 function get_coords_from_id($id)
 {
