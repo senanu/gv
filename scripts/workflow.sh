@@ -2,7 +2,10 @@
 
 # Where are files stored?
 
-# Three files directly from AutDB
+# Three files directly from AutDB:
+# Common Table from Human Gene Module
+# Rare Table from Human Gene Module
+# Individual Table from CNV Module
 # All should be pipe-delimited text files and should contain GRCh38 coordinates.
 # GRCh38 coords should be in fields named either 'start_GRCh38', 'end_GRCh38',
 # and 'chr_GRCh38' or 'chr', 'start', 'end'. However, since Fall 2017,
