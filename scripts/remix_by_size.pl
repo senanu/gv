@@ -34,7 +34,7 @@ foreach my $file (@infile) {
     my $dat = JSON::from_json($raw);
     
     foreach my $variant (@$dat) {
-        if ( $variant->{end_GRCh38} - $variant->{start_GRCh38} + 1 >= 1000) {
+        if ( $variant->{end} - $variant->{start} + 1 >= 1000) {
             push @$cnv, $variant;
         } else {
             push @$snp, $variant;
