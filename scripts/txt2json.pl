@@ -64,12 +64,13 @@ __END__
 
 =head1 NAME
 
-txt2json.pl - 
+txt2json.pl - convert delimited text files to json
 
 =head1 SYNOPSIS
 
  txt2json.pl --infile infile
-                 --outfile outfile
+             --outfile outfile
+             --delim "\|"
 
 =head1 OPTIONS
 
@@ -81,19 +82,19 @@ Print this message
 
 =item B<-i --infile>
 
-Input file
+Input file(s)
 
 =item B<-o --outfile>
 
 Output file
 
-=item B<>
+=item B<-d --delim>
+
+Delimiter. Pipe delimiter is default.
 
 =back
 
 =head1 DESCRIPTION
-
-
 
 =head1 SEE ALSO
 
