@@ -3,7 +3,10 @@
 # Where are files stored?
 
 # Three files directly from AutDB
-# All should be pipe-delimited text files
+# All should be pipe-delimited text files and should contain GRCh38 coordinates.
+# GRCh38 coords should be in fields named either 'start_GRCh38', 'end_GRCh38',
+# and 'chr_GRCh38' or 'chr', 'start', 'end'. However, since Fall 2017,
+# all GRCh38 coordinates should be labeled according to the former scheme.
 COMMONVARS="/Users/senanu/Desktop/mindspec/data/processed/HG_common_Q2_2017.csv"
 RAREVARS="/Users/senanu/Desktop/mindspec/data/processed/HG_rare_Q2_2017.csv"
 CNVVARS="/Users/senanu/Desktop/mindspec/data/processed/CNV_Individual_Q2_2017.csv"
@@ -17,6 +20,11 @@ CNVFILE="temp_CNV.json"
 
 # Final data repository
 GENOVERSEDATADIR="../Genoverse_Data"
+
+###-----------------------------------------------------###
+###    Modifications should not be needed below this    ###
+###    point for simple filesystem specifications       ###
+###-----------------------------------------------------###
 
 
 mkdir $DATADIR
