@@ -4,17 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- DataTables CSS -->
-  <!-- <link rel="stylesheet" type="text/css" href="examples/genoverse.org/styles.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.3.0/css/scroller.dataTables.min.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="mindspec/css/dataTables_childTables.css"> -->
-  <!-- DataTables -->
-  <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-  <!-- <script src="https://cdn.datatables.net/scroller/1.3.0/js/dataTables.scroller.min.js"></script> -->
   <!-- Genoverse -->
-  <script type="text/javascript" src="js/genoverse.combined.nojquery.js"></script>
-  <script src="index.js"></script>
+  <script type="text/javascript" src="js/genoverse.min.js"></script>
+ <script src="index.js"></script>
 
 
 </head>
@@ -24,51 +16,22 @@
   var cnv_url = "CNV_chr_1.json";
   var chr_num = "1";
   </script>
-  <div class="container" id="searcher">
-    <div class="head" id="searcher_head"><h1>Search for data</h1></div>
-    <!-- <p> Select genes from <a href="./circos_genes.html"> circos plot </a></p> -->
-    <!-- <p> OR </p> -->
-    <form id="search_form" action="" >
-      <input type="text" name="coords" id="coords">
-      <input type="submit" name="searcher_submit" id="searcher_submit">
-    </form>
-    <div id="message" name="message">
-      Enter coordinates in the form "4:123-345" or search for a gene name (eg DIAPH3).
-      <div id="actual_coords" name="actual_coords">
-        Current display:
-      </div>
-      <div id="query_coords" name="query_coords">
-        Last query:
-      </div>
+  <form id="search_form" action="" >
+    <input type="text" name="coords" id="coords">
+    <input type="submit" name="searcher_submit" id="searcher_submit">
+  </form>
+  <div id="message" name="message">
+    Enter coordinates in the form "4:123-345" or search for a gene name (eg DIAPH3).
+    <div id="actual_coords" name="actual_coords">
+      Current display:
+    </div>
+    <div id="query_coords" name="query_coords">
+      Last query:
     </div>
   </div>
 
 
-  <!--    <div class="container" id="displays_container">
-  <div class="head"><h1>Tabular display</h1></div>
-  <div class="wrap" id="table_div">
-  <div style='border:1px solid blue' >
-  Filter table By:
-  <input type='text' id='filt_range' name='filt_range' title='Only show variants overlapping this region'>Coordinates
-  <input type='checkbox' id='filt_lastquery' name='filt_lastquery' checked='checked' title='Only show variants overlapping the range of the last query'>Last Query
-  <input type='checkbox' id='filt_imperfect' name='filt_imperfect' title='Only show variants with bases unmapped, mapped to more than 1 region, or a start/end point that is not mapped onto GRCh38'>Imperfect Mapping
-</div>
-<table id="data_table" class="display compact" cellspacing="0" width="100%">
-<thead>
-<tr>
-<th>ID</th>
-<th>Location</th>
-<th>Start</th>
-<th>End</th>
-<th>Bases Unmapped</th>
-<th>start_end_mapped</th>
-<th>regions_GRCh38</th>
-<th>Details</th>
-</tr>
-</thead>
-</table>
-</div>
-</div> -->
+
 
 <div class="container" id="genoverse_container" >
   <div class="head"><h1>Genoverse</h1></div>
@@ -77,8 +40,9 @@
     <div id='genoverse'></div>
 
     <script>
-  //  window.genoverse = new Genoverse();
+
     document.addEventListener('DOMContentLoaded', function () { window.genoverse = new Genoverse()});
+
     </script>
   </div>
 </div>

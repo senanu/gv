@@ -20,7 +20,6 @@ $(document).ready(function() {
     $('#query_coords').append(query_coords);
 
     var this_last_query = get_URL_coordParts('last_query', 'chr');
-
     if (typeof this_last_query !== 'undefined'){
         data_url = "chromosome_" + this_last_query + ".json";
         //myTable.ajax.url(data_url).load();
@@ -29,124 +28,6 @@ $(document).ready(function() {
 });
 
 
-
-$(document).ready(function() {
-    myTable = $('#data_table').DataTable( {
-        stateSave: true,
-        ajax: {
-            url: data_url,
-            dataSrc: ''
-        },
-        columns: [
-            { "data": "id"},
-            { "data": "seq_region_name" },
-            { "data": "start" },
-            { "data": "end" },
-            { "data": "bases_unmapped" },
-            { "data": "start_end_mapped" },
-            { "data": "regions"},
-            {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": ''
-            }
-        ],
-        columnDefs: [
-            {
-                targets: [1],
-                render: function ( data, type, row, meta)
-                {
-                    coord_str = data + ':' + row["start"] + '-' + row["end"];
-                    return("<button>" + coord_str + "</button>");
-                }
-            },
-            {
-                targets: [2,3],
-                visible: false
-            }
-
-        ],
-        scrollY: 200,
-        deferRender: true,
-        scroller: true
-    } );
-    $('#filt_lastquery').change( function(event){
-        myTable.draw();
-    });
-    $('#filt_range').change( function(event){
-        myTable.draw();
-    });
-    $('#filt_imperfect').change( function(event){
-        myTable.draw();
-    });
-     // Add event listener for opening and closing details
-    $('#data_table tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = myTable.row( tr );
-        alert(format(row.data()));
-        /* The following code is for using child rows but there is too much
-         * data so instead we just use a simple alert with pre-formatted text.
-         *if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-        }*/
-    } );
-    $('#data_table tbody').on( 'click', 'button', function () {
-        var data = myTable.row( $(this).parents('tr') ).data();
-        var last_query = get_URL_coordParts('last_query', 'full');
-        var goto_coord = data["seq_region_name"] + ":" + data["start"] + "-" + data["end"];
-        $.ajax({
-            type: "POST",
-            url: 'get_coords.php',
-            data: {id: data["id"],
-                chr: data["seq_region_name"],
-                infile: 'chr_' + data["seq_region_name"] + '.gff3',
-                outfile: "regions.gff3"},
-            success: function(data){
-                //alert(data);
-            },
-            error: function(){
-                //alert("OH NO!!! Please try clicking that button again -- the server didn't have time to create the necessary file");
-            }
-        });
-        window.location.href = "index.html?r=" + goto_coord + "&last_query=" + last_query;
-    } );
-} );
-
-/*Function to format the child rows of the table
- * This is currently not being used because there is too much
- * data to fit conveniently*/
-function format2 ( d ) {
-    // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>details:</td>'+
-            '<td>'+d+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+d.start+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
-}
-
-function format (d) {
-    //'d' is the original data object for the row
-    var str = JSON.stringify(d, null, '\t');
-    return str;
-}
-//These functions are used to pre-load the "Tabular display" with the last chromosomal search
 function get_URL_vars() {
 	var get_var = {};
 	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (i, key, value) {
@@ -216,76 +97,6 @@ function get_URL_coordParts(time, part){
         return null ;
     }
 }
-
-
-/* Custom filtering function by last query for the datatable*/
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex) {
-        var filt_criteria;
-        if ( $('#filt_lastquery:checked').val() === 'on'){
-            filt_criteria = get_URL_coordParts('last_query', 'full');
-        } else {
-            filt_criteria = '';
-        }
-        criteria_array = filt_criteria.split(/[\:-]/);
-        var chr   = parseInt(data["1"], 10);
-        var start = parseInt(data["2"], 10);
-        var end   = parseInt(data["3"], 10);
-        if( ( filt_criteria === '')  ||
-                ( filt_criteria === null) ||
-            ( criteria_array[1] <= start && criteria_array[2] >= start ) ||
-            ( criteria_array[1] <= end   && criteria_array[2] >= end   ) ||
-            ( criteria_array[1] >= start && criteria_array[2] <= end  )) {
-            return true;
-        }
-        return false;
-    }
-);
-
-/* Custom filtering function by user-editable location for the datatable*/
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex) {
-        var filt_criteria = $('#filt_range').val();
-        criteria_array = filt_criteria.split(/[\:-]/);
-        var chr   = parseInt(data["1"], 10);
-        var start = parseInt(data["2"], 10);
-        var end   = parseInt(data["3"], 10);
-        if( ( filt_criteria === '')  ||
-                ( filt_criteria === null) ||
-            ( criteria_array[1] <= start && criteria_array[2] >= start ) ||
-            ( criteria_array[1] <= end   && criteria_array[2] >= end   ) ||
-            ( criteria_array[1] >= start && criteria_array[2] <= end   )  ) {
-            return true;
-        }
-        return false;
-    }
-);
-
-/* Custom filtering function by imperfect mapping for the datatable*/
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex) {
-        var restrict_to_imperfect;
-        if ( $('#filt_imperfect:checked').val() === "on"){
-            restrict_to_imperfect = true;
-        } else {
-            restrict_to_imperfect = false;
-        }
-        var unmapped   = parseInt(data["4"], 10);
-        var start_end  = data["5"];
-        var regions    = parseInt(data["6"], 10);
-        if( restrict_to_imperfect === false ){
-            return true;
-        } else if ( ( unmapped  !== 0)  ||
-                ( start_end !== 'Both') ||
-                ( regions   !== 1 ) ){
-            return true;
-        }
-        return false;
-    }
-);
-
-
-
 
 $(function() {
     new Genoverse({
