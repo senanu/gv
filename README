@@ -18,4 +18,20 @@
 - Make the root web directory ./gv/Genoverse
 - Delete the original git Genoverse copy
     cd ../../
-    rm -fr Genoverse 
+    rm -fr Genoverse
+
+** About Genoverse **
+
+- Genoverse is available from https://github.com/wtsi-web/Genoverse and actually
+  has very few requirements. A brief _Help_ document is available at
+  http://wtsi-web.github.io/Genoverse/help.pdf.
+
+- The scripts included in this repository simply convert the Human Gene Module and
+  CNV module data into JSON files, delete some of the information from those files,
+  and separate them into chromosome-specific files that Genoverse will load
+  when it is called. Editing the file locations at the top of
+  gv/scripts/workflow.sh should be sufficient.
+
+- Ideally, Genoverse would obtain data from an API. However, we have never spent
+  the time to implement this and have instead chosen the easier route of using
+  static files, which it still seems to load reasonably quickly.
